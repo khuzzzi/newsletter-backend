@@ -1,0 +1,15 @@
+{
+    "version": 2,
+    "routes": [
+      {
+        "src": "/.*",
+        "headers": {
+          "Access-Control-Allow-Origin": "https://newsletter-frontend-zeta.vercel.app",
+          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type, Authorization",
+          "Access-Control-Allow-Credentials": "true"
+        }
+      }
+    ]
+  }
+  
