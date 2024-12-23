@@ -14,20 +14,24 @@ const corsOptions = {
     credentials: true,
 };
 
-// Enable CORS with the specified options
-
-// Handle preflight requests explicitly
-
+// Initialize Express app
 const app = express();
 
+// Enable CORS with the specified options
 app.use(cors(corsOptions));
+
+// Handle preflight requests explicitly
 app.options("*", cors(corsOptions));
+
+// Middleware to parse JSON request bodies
 app.use(express.json());
 
+// Start the server
 app.listen(process.env.PORT || 3000, () => {
     console.log(`Server is running on port ${process.env.PORT || 3000}`);
 });
 
+// Connect to MongoDB
 mongoose
     .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log("MongoDB connected"))
@@ -36,6 +40,7 @@ mongoose
 // In-memory storage for simplicity (consider moving this to a database for production)
 const otpStorage = new Map();
 
+// Function to send verification email
 const sendVerificationEmail = (email, otp) => {
     const transporter = nodemailer.createTransport({
         service: "gmail",
@@ -61,6 +66,7 @@ const sendVerificationEmail = (email, otp) => {
     });
 };
 
+// Route to subscribe a user
 app.post("/subscribe", async (req, res) => {
     try {
         const { email } = req.body;
@@ -90,6 +96,7 @@ app.post("/subscribe", async (req, res) => {
     }
 });
 
+// Route to verify OTP
 app.post("/verify", (req, res) => {
     try {
         const { email, otp } = req.body;
