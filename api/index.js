@@ -2,15 +2,27 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
-import Subscriber from "./model/subscribe.model.js";
+import Subscriber from "./model/subscribe.model.js"; // Ensure this path is correct
 import nodemailer from "nodemailer";
 
 dotenv.config();
 
+// CORS options
 const corsOptions = {
     origin: "https://newsletter-frontend-zeta.vercel.app", // Allow only your frontend's origin
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"], // Add any other headers you might use
+    allowedHeaders: [
+        "Content-Type",
+        "Authorization",
+        "X-CSRF-Token",
+        "X-Requested-With",
+        "Accept",
+        "Accept-Version",
+        "Content-Length",
+        "Content-MD5",
+        "Date",
+        "X-Api-Version"
+    ],
     credentials: true,
 };
 
@@ -19,9 +31,6 @@ const app = express();
 
 // Enable CORS with the specified options
 app.use(cors(corsOptions));
-
-// Handle preflight requests explicitly
-app.options("*", cors(corsOptions));
 
 // Middleware to parse JSON request bodies
 app.use(express.json());
@@ -125,3 +134,6 @@ app.post("/verify", (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 });
+
+// Handle preflight requests explicitly for all routes
+app.options("*", cors(corsOptions));
