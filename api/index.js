@@ -8,14 +8,20 @@ import nodemailer from "nodemailer";
 dotenv.config();
 
 const corsOptions = {
-    origin: ["https://newsletter-frontend-zeta.vercel.app"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: "https://newsletter-frontend-zeta.vercel.app", // Allow only your frontend's origin
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"], // Add any other headers you might use
     credentials: true,
 };
+
+// Enable CORS with the specified options
+
+// Handle preflight requests explicitly
 
 const app = express();
 
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 app.use(express.json());
 
 app.listen(process.env.PORT || 3000, () => {
