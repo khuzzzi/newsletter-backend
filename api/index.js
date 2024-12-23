@@ -136,4 +136,6 @@ app.post("/verify", (req, res) => {
 });
 
 // Handle preflight requests explicitly for all routes
-app.options("*", cors(corsOptions));
+app.options("*", cors(corsOptions), (req, res) => {
+    res.sendStatus(200); // Respond with OK status for preflight requests
+});
