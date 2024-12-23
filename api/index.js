@@ -9,22 +9,11 @@ dotenv.config();
 
 // CORS options
 const corsOptions = {
-    origin: "https://newsletter-frontend-zeta.vercel.app", // Allow only your frontend's origin
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: [
-        "Content-Type",
-        "Authorization",
-        "X-CSRF-Token",
-        "X-Requested-With",
-        "Accept",
-        "Accept-Version",
-        "Content-Length",
-        "Content-MD5",
-        "Date",
-        "X-Api-Version"
-    ],
-    credentials: true,
-};
+    origin: 'https://newsletter-frontend-zeta.vercel.app', // Specific origin
+    methods: ['GET', 'POST', 'OPTIONS'], // Allowed methods
+    allowedHeaders: ['Content-Type'], // Allowed headers
+    maxAge: 86400,
+  };
 
 // Initialize Express app
 const app = express();
@@ -74,6 +63,10 @@ const sendVerificationEmail = (email, otp) => {
         }
     });
 };
+
+
+
+
 
 // Route to subscribe a user
 app.post("/subscribe", async (req, res) => {
